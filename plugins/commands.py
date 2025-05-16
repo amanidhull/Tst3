@@ -16,7 +16,6 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from database.ia_filterdb import Media, get_file_details, unpack_new_file_id, get_bad_files, get_search_results
 from database.users_chats_db import db
 from database.safari_reffer import sdb
-from database.topdb import silentdb
 from info import *
 from .pm_filter import auto_filter
 from utils import get_settings, get_size, is_subscribed, is_req_subscribed, save_group_settings, temp, get_shortlink, get_seconds
@@ -56,19 +55,14 @@ async def start(client, message):
             await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention, temp.B_NAME))
         if len(message.command) != 2:
             buttons = [[
-                        InlineKeyboardButton('☆ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ☆', url=f'http://telegram.me/{temp.U_NAME}?startgroup=true')
+                        InlineKeyboardButton('💌 ᴀʙᴏᴜᴛ ', callback_data='about'),
+                        InlineKeyboardButton('🐬 ʀᴇғᴇʀs', callback_data="pm_reff")
                     ],[
-                        InlineKeyboardButton('Tʀᴇɴᴅɪɴɢ 🏷', callback_data="topsearch"),
-                        InlineKeyboardButton('⚔️ғᴇᴀᴛᴜʀᴇs ⚔️', callback_data='features')
-                    ],[
-                        InlineKeyboardButton('🍀 Hᴇʟᴘ 🍀', callback_data='help'),
-                        InlineKeyboardButton('🤖 ᴀʙᴏᴜᴛ 🤖', callback_data='about')
-                    ],[
-                        InlineKeyboardButton('🆓 ᴘʀᴇᴍɪᴜᴍ', callback_data="pm_reff"), 
-                        InlineKeyboardButton('✨ ʙᴜʏ ᴘʀᴇᴍɪᴜᴍ ✨', callback_data="premium_info")
+                        InlineKeyboardButton('🍀 Hᴇʟᴘ', callback_data='help'),
+                        InlineKeyboardButton('💴 ᴜᴘɢʀᴀᴅᴇ', callback_data="premium_info")
                     ]]
             reply_markup = InlineKeyboardMarkup(buttons)
-            m=await message.reply_sticker("CAACAgQAAxkBAAEKeqNlIpmeUoOEsEWOWEiPxPi3hH5q-QACbg8AAuHqsVDaMQeY6CcRojAE") 
+            m=await message.reply_sticker("CAACAgUAAxkBAAIeq2gnPKAcwHb2zdazs1Tzu1M77AQeAAK4FgACWr1JVxIS9qJda1pQHgQ") 
             await asyncio.sleep(2)
             await m.delete()
             await message.reply_photo(
@@ -81,19 +75,14 @@ async def start(client, message):
             return
         if len(message.command) == 2 and message.command[1] in ["subscribe", "error", "okay", "help"]:
             buttons = [[
-                        InlineKeyboardButton('☆ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ☆', url=f'http://telegram.me/{temp.U_NAME}?startgroup=true')
+                        InlineKeyboardButton('💌 ᴀʙᴏᴜᴛ ', callback_data='about'),
+                        InlineKeyboardButton('🐬 ʀᴇғᴇʀs', callback_data="pm_reff")
                     ],[
-                        InlineKeyboardButton('✪ ᴜᴘᴅᴀᴛᴇꜱ ✪', callback_data='channels'), 
-                        InlineKeyboardButton('⚔️ ғᴇᴀᴛᴜʀᴇs ⚔️', callback_data='features')
-                    ],[
-                        InlineKeyboardButton('🍀 Hᴇʟᴘ 🍀', callback_data='help'),
-                        InlineKeyboardButton('🤖 ᴀʙᴏᴜᴛ 🤖', callback_data='about')
-                    ],[
-                        InlineKeyboardButton('🆓 ᴘʀᴇᴍɪᴜᴍ', callback_data="pm_reff"), 
-                        InlineKeyboardButton('✨ ʙᴜʏ ᴘʀᴇᴍɪᴜᴍ ✨', callback_data="premium_info")
+                        InlineKeyboardButton('🍀 Hᴇʟᴘ', callback_data='help'),
+                        InlineKeyboardButton('💴 ᴜᴘɢʀᴀᴅᴇ', callback_data="premium_info")
                     ]]
             reply_markup = InlineKeyboardMarkup(buttons)
-            m=await message.reply_sticker("CAACAgQAAxkBAAEKeqNlIpmeUoOEsEWOWEiPxPi3hH5q-QACbg8AAuHqsVDaMQeY6CcRojAE") 
+            m=await message.reply_sticker("CAACAgUAAxkBAAIeq2gnPKAcwHb2zdazs1Tzu1M77AQeAAK4FgACWr1JVxIS9qJda1pQHgQ") 
             await asyncio.sleep(2)
             await m.delete()
             await message.reply_photo(
@@ -191,7 +180,7 @@ async def start(client, message):
                 
                 await client.send_message(settings['log'], script.VERIFIED_LOG_TEXT.format(safari.from_user.mention, user_id, datetime.now(pytz.timezone('Asia/Kolkata')).strftime('%d %B %Y'), num))
                 btn = [[
-                    InlineKeyboardButton("✅ ɢᴇᴛ ꜰɪʟᴇ ✅", url=verify),
+                    InlineKeyboardButton("ᴄʟɪᴄᴋ ᴀɴᴅ ɢᴇᴛ ꜰɪʟᴇ 🥳", url=verify),
                 ]]
                 reply_markup=InlineKeyboardMarkup(btn)
                 dlt=await safari.reply_photo(
@@ -218,13 +207,13 @@ async def start(client, message):
                     logger.error("Make sure Bot is admin in Forcesub channel")
                     return
                 btn = [[
-                    InlineKeyboardButton("⛔️ ᴊᴏɪɴ ɴᴏᴡ ⛔️", url=invite_link.invite_link)
+                    InlineKeyboardButton("📢 ᴊᴏɪɴ ɴᴏᴡ", url=invite_link.invite_link)
                 ]]
                 if message.command[1] != "subscribe":
                     if data.startswith("allfiles"):
-                        btn.append([InlineKeyboardButton("♻️ ᴛʀʏ ᴀɢᴀɪɴ ♻️", url=f"https://t.me/{temp.U_NAME}?start=allfiles_{grp_id}_{file_id}")])
+                        btn.append([InlineKeyboardButton("🔄 ᴛʀʏ ᴀɢᴀɪɴ 🔄", url=f"https://t.me/{temp.U_NAME}?start=allfiles_{grp_id}_{file_id}")])
                     else:
-                        btn.append([InlineKeyboardButton("♻️ ᴛʀʏ ᴀɢᴀɪɴ ♻️", url=f"https://t.me/{temp.U_NAME}?start=files_{grp_id}_{file_id}")])
+                        btn.append([InlineKeyboardButton("🔄 ᴛʀʏ ᴀɢᴀɪɴ 🔄", url=f"https://t.me/{temp.U_NAME}?start=files_{grp_id}_{file_id}")])
                 await client.send_message(
                     chat_id=message.from_user.id,
                     text=script.FSUB_TXT.format(message.from_user.mention),
@@ -238,13 +227,13 @@ async def start(client, message):
             if settings.get('fsub_id', AUTH_CHANNEL) and not await is_subscribed(client, message.from_user.id, channel):
                 invite_link = await client.create_chat_invite_link((channel), creates_join_request=True)
                 btn = [[
-                        InlineKeyboardButton("⛔️ ᴊᴏɪɴ ɴᴏᴡ ⛔️", url=invite_link.invite_link)
+                        InlineKeyboardButton("📢 ᴊᴏɪɴ ɴᴏᴡ", url=invite_link.invite_link)
                       ]]
                 if message.command[1] != "subscribe":
                     if data.startswith("allfiles"):
-                        btn.append([InlineKeyboardButton("♻️ ᴛʀʏ ᴀɢᴀɪɴ ♻️", url=f"https://t.me/{temp.U_NAME}?start=allfiles_{grp_id}_{file_id}")])
+                        btn.append([InlineKeyboardButton("🔄 ᴛʀʏ ᴀɢᴀɪɴ 🔄", url=f"https://t.me/{temp.U_NAME}?start=allfiles_{grp_id}_{file_id}")])
                     else:
-                        btn.append([InlineKeyboardButton("♻️ ᴛʀʏ ᴀɢᴀɪɴ ♻️", url=f"https://t.me/{temp.U_NAME}?start=files_{grp_id}_{file_id}")])
+                        btn.append([InlineKeyboardButton("🔄 ᴛʀʏ ᴀɢᴀɪɴ 🔄", url=f"https://t.me/{temp.U_NAME}?start=files_{grp_id}_{file_id}")])
                 await client.send_message(
                     chat_id=message.from_user.id,
                     text=script.FSUB_TXT.format(message.from_user.mention),
@@ -272,17 +261,17 @@ async def start(client, message):
                     verify = await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=verify_{user_id}_{verify_id}_{file_id}", grp_id, is_second_shortener, is_third_shortener)
                 if not await db.check_trial_status(user_id):
                     buttons = [[
-                        InlineKeyboardButton("✅️ ᴠᴇʀɪғʏ ✅️", url=verify)
+                        InlineKeyboardButton("🔐 ᴠᴇʀɪғʏ 🔐", url=verify)
                     ],[
-                        InlineKeyboardButton("⁉️ ʜᴏᴡ ᴛᴏ ᴠᴇʀɪғʏ ⁉️", url=tutorial)
+                        InlineKeyboardButton("📽 ʜᴏᴡ ᴛᴏ ᴠᴇʀɪғʏ 📽, url=tutorial)
                     ],[
-                        InlineKeyboardButton("✨5ᴍɪɴ Pʀᴇᴍɪᴜᴍ Tʀᴀɪʟ✨", callback_data=f'give_trial')
+                        InlineKeyboardButton("✨ 5ᴍɪɴ Pʀᴇᴍɪᴜᴍ Tʀᴀɪʟ ✨", callback_data=f'give_trial')
                     ]]
                 else:
                     buttons = [[
-                        InlineKeyboardButton("✅️ ᴠᴇʀɪғʏ ✅️", url=verify)
+                        InlineKeyboardButton("🔐 ᴠᴇʀɪғʏ 🔐", url=verify)
                     ],[
-                        InlineKeyboardButton("⁉️ ʜᴏᴡ ᴛᴏ ᴠᴇʀɪғʏ ⁉️", url=tutorial)
+                        InlineKeyboardButton("📽 ʜᴏᴡ ᴛᴏ ᴠᴇʀɪғʏ 📽", url=tutorial)
                     ],[
                         InlineKeyboardButton("✨ ʀᴇᴍᴏᴠᴇ ᴠᴇʀɪғʏ ✨", callback_data=f'premium_info')
                     ]]
@@ -681,7 +670,7 @@ async def set_tutorial_1(client, message):
     try:
         tutorial = message.text.split(" ", 1)[1]
     except:
-        return await message.reply_text("<b>Command Incomplete!!\n\nuse like this -</b>\n\n<code>/set_tutorial https://t.me/safaribotts</code>")
+        return await message.reply_text("<b>Command Incomplete!!\n\nuse like this -</b>\n\n<code>/set_tutorial https://t.me/MSLANDERS</code>")
     await save_group_settings(grp_id, 'tutorial', tutorial)
     await message.reply_text(f"<b>Successfully changed tutorial for {title}</b>\n\nLink - {tutorial}", disable_web_page_preview=True)
     await client.send_message(LOG_CHANNEL, f"Tutorial for {title} (Group ID: {grp_id}, Invite Link: {invite_link}) has been updated by {message.from_user.username}")
@@ -701,7 +690,7 @@ async def set_tutorial_2(client, message):
     try:
         tutorial = message.text.split(" ", 1)[1]
     except:
-        return await message.reply_text("<b>Command Incomplete!!\n\nuse like this -</b>\n\n<code>/set_tutorial https://t.me/safaribotts</code>")
+        return await message.reply_text("<b>Command Incomplete!!\n\nuse like this -</b>\n\n<code>/set_tutorial https://t.me/MSLANDERS</code>")
     await save_group_settings(grp_id, 'tutorial2', tutorial)
     await message.reply_text(f"<b>Successfully changed tutorial for {title}</b>\n\nLink - {tutorial}", disable_web_page_preview=True)
     await client.send_message(LOG_CHANNEL, f"Tutorial 2 for {title} (Group ID: {grp_id}, Invite Link: {invite_link}) has been updated by {message.from_user.username}")
@@ -721,7 +710,7 @@ async def set_tutorial_3(client, message):
     try:
         tutorial = message.text.split(" ", 1)[1]
     except:
-        return await message.reply_text("<b>Command Incomplete!!\n\nuse like this -</b>\n\n<code>/set_tutorial https://t.me/safaribotts</code>")
+        return await message.reply_text("<b>Command Incomplete!!\n\nuse like this -</b>\n\n<code>/set_tutorial https://t.me/MSLANDERS</code>")
     await save_group_settings(grp_id, 'tutorial3', tutorial)
     await message.reply_text(f"<b>Successfully changed tutorial for {title}</b>\n\nLink - {tutorial}", disable_web_page_preview=True)
     await client.send_message(LOG_CHANNEL, f"Tutorial 2 for {title} (Group ID: {grp_id}, Invite Link: {invite_link}) has been updated by {message.from_user.username}")
@@ -760,7 +749,7 @@ async def set_verify(c, m):
     except Exception as e:
         await save_group_settings(grp_id, 'verify', VERIFY_URL)
         await save_group_settings(grp_id, 'verify_api', VERIFY_API)
-        await sts.edit(f"<b><u>❌ ᴇʀʀᴏʀ ᴏᴄᴄᴏᴜʀᴇᴅ ❌</u>\n\nᴀᴜᴛᴏ ᴀᴅᴅᴇᴅ ᴅᴇꜰᴜʟᴛ sʜᴏʀᴛɴᴇʀ\n\nɪꜰ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴄʜᴀɴɢᴇ ᴛʜᴇɴ ᴜsᴇ ᴄᴏʀʀᴇᴄᴛ ꜰᴏʀᴍᴀᴛ ᴏʀ ᴀᴅᴅ ᴠᴀʟɪᴅ sʜᴏʀᴛʟɪɴᴋ ᴅᴏᴍᴀɪɴ ɴᴀᴍᴇ & ᴀᴘɪ\n\nʏᴏᴜ ᴄᴀɴ ᴀʟsᴏ ᴄᴏɴᴛᴀᴄᴛ ᴏᴜʀ <a href=https://t.me/safarisuport>sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ</a> ꜰᴏʀ sᴏʟᴠᴇ ᴛʜɪs ɪssᴜᴇ...\n\nʟɪᴋᴇ -\n\n`/set_verify droplink.co 5c6377b71bb8c36629bad14b3c67d9749c4f62e6`\n\n💔 ᴇʀʀᴏʀ - <code>{e}</code></b>")
+        await sts.edit(f"<b><u>❌ ᴇʀʀᴏʀ ᴏᴄᴄᴏᴜʀᴇᴅ ❌</u>\n\nᴀᴜᴛᴏ ᴀᴅᴅᴇᴅ ᴅᴇꜰᴜʟᴛ sʜᴏʀᴛɴᴇʀ\n\nɪꜰ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴄʜᴀɴɢᴇ ᴛʜᴇɴ ᴜsᴇ ᴄᴏʀʀᴇᴄᴛ ꜰᴏʀᴍᴀᴛ ᴏʀ ᴀᴅᴅ ᴠᴀʟɪᴅ sʜᴏʀᴛʟɪɴᴋ ᴅᴏᴍᴀɪɴ ɴᴀᴍᴇ & ᴀᴘɪ\n\nʏᴏᴜ ᴄᴀɴ ᴀʟsᴏ ᴄᴏɴᴛᴀᴄᴛ ᴏᴜʀ <a href=https://t.me/MSLANDERS_HELP>sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ</a> ꜰᴏʀ sᴏʟᴠᴇ ᴛʜɪs ɪssᴜᴇ...\n\nʟɪᴋᴇ -\n\n`/set_verify droplink.co 5c6377b71bb8c36629bad14b3c67d9749c4f62e6`\n\n💔 ᴇʀʀᴏʀ - <code>{e}</code></b>")
 
 @Client.on_message(filters.command('set_verify2'))
 async def set_verify2(c, m):
@@ -796,7 +785,7 @@ async def set_verify2(c, m):
     except Exception as e:
         await save_group_settings(grp_id, 'verify_2', VERIFY_URL2)
         await save_group_settings(grp_id, 'verify_api2', VERIFY_API2)
-        await sts.edit(f"<b><u>❌ ᴇʀʀᴏʀ ᴏᴄᴄᴏᴜʀᴇᴅ ❌</u>\n\nᴀᴜᴛᴏ ᴀᴅᴅᴇᴅ ᴅᴇꜰᴜʟᴛ sʜᴏʀᴛɴᴇʀ\n\nɪꜰ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴄʜᴀɴɢᴇ ᴛʜᴇɴ ᴜsᴇ ᴄᴏʀʀᴇᴄᴛ ꜰᴏʀᴍᴀᴛ ᴏʀ ᴀᴅᴅ ᴠᴀʟɪᴅ sʜᴏʀᴛʟɪɴᴋ ᴅᴏᴍᴀɪɴ ɴᴀᴍᴇ & ᴀᴘɪ\n\nʏᴏᴜ ᴄᴀɴ ᴀʟsᴏ ᴄᴏɴᴛᴀᴄᴛ ᴏᴜʀ <a href=https://t.me/safarisuport>sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ</a> ꜰᴏʀ sᴏʟᴠᴇ ᴛʜɪs ɪssᴜᴇ...\n\nʟɪᴋᴇ -\n\n`/set_verify2 shortyfi.link 465d89bf8d7b71277a822b890f7cc3e2489acf73`\n\n💔 ᴇʀʀᴏʀ - <code>{e}</code></b>")
+        await sts.edit(f"<b><u>❌ ᴇʀʀᴏʀ ᴏᴄᴄᴏᴜʀᴇᴅ ❌</u>\n\nᴀᴜᴛᴏ ᴀᴅᴅᴇᴅ ᴅᴇꜰᴜʟᴛ sʜᴏʀᴛɴᴇʀ\n\nɪꜰ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴄʜᴀɴɢᴇ ᴛʜᴇɴ ᴜsᴇ ᴄᴏʀʀᴇᴄᴛ ꜰᴏʀᴍᴀᴛ ᴏʀ ᴀᴅᴅ ᴠᴀʟɪᴅ sʜᴏʀᴛʟɪɴᴋ ᴅᴏᴍᴀɪɴ ɴᴀᴍᴇ & ᴀᴘɪ\n\nʏᴏᴜ ᴄᴀɴ ᴀʟsᴏ ᴄᴏɴᴛᴀᴄᴛ ᴏᴜʀ <a href=https://t.me/MSLANDERS_HELP>sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ</a> ꜰᴏʀ sᴏʟᴠᴇ ᴛʜɪs ɪssᴜᴇ...\n\nʟɪᴋᴇ -\n\n`/set_verify2 shortyfi.link 465d89bf8d7b71277a822b890f7cc3e2489acf73`\n\n💔 ᴇʀʀᴏʀ - <code>{e}</code></b>")
 
 @Client.on_message(filters.command('set_verify3'))
 async def set_verify3(c, m):
@@ -832,7 +821,7 @@ async def set_verify3(c, m):
     except Exception as e:
         await save_group_settings(grp_id, 'verify_3', VERIFY_URL3)
         await save_group_settings(grp_id, 'verify_api3', VERIFY_API3)
-        await sts.edit(f"<b><u>❌ ᴇʀʀᴏʀ ᴏᴄᴄᴏᴜʀᴇᴅ ❌</u>\n\nᴀᴜᴛᴏ ᴀᴅᴅᴇᴅ ᴅᴇꜰᴜʟᴛ sʜᴏʀᴛɴᴇʀ\n\nɪꜰ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴄʜᴀɴɢᴇ ᴛʜᴇɴ ᴜsᴇ ᴄᴏʀʀᴇᴄᴛ ꜰᴏʀᴍᴀᴛ ᴏʀ ᴀᴅᴅ ᴠᴀʟɪᴅ sʜᴏʀᴛʟɪɴᴋ ᴅᴏᴍᴀɪɴ ɴᴀᴍᴇ & ᴀᴘɪ\n\nʏᴏᴜ ᴄᴀɴ ᴀʟsᴏ ᴄᴏɴᴛᴀᴄᴛ ᴏᴜʀ <a href=https://t.me/safarisuport>sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ</a> ꜰᴏʀ sᴏʟᴠᴇ ᴛʜɪs ɪssᴜᴇ...\n\nʟɪᴋᴇ -\n\n`/set_verify3 sharedisklinks.com 587f94f0e0b1813a52aed61290af6ea79d6ee464`\n\n💔 ᴇʀʀᴏʀ - <code>{e}</code></b>")
+        await sts.edit(f"<b><u>❌ ᴇʀʀᴏʀ ᴏᴄᴄᴏᴜʀᴇᴅ ❌</u>\n\nᴀᴜᴛᴏ ᴀᴅᴅᴇᴅ ᴅᴇꜰᴜʟᴛ sʜᴏʀᴛɴᴇʀ\n\nɪꜰ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴄʜᴀɴɢᴇ ᴛʜᴇɴ ᴜsᴇ ᴄᴏʀʀᴇᴄᴛ ꜰᴏʀᴍᴀᴛ ᴏʀ ᴀᴅᴅ ᴠᴀʟɪᴅ sʜᴏʀᴛʟɪɴᴋ ᴅᴏᴍᴀɪɴ ɴᴀᴍᴇ & ᴀᴘɪ\n\nʏᴏᴜ ᴄᴀɴ ᴀʟsᴏ ᴄᴏɴᴛᴀᴄᴛ ᴏᴜʀ <a href=https://t.me/MSLANDERS_HELP>sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ</a> ꜰᴏʀ sᴏʟᴠᴇ ᴛʜɪs ɪssᴜᴇ...\n\nʟɪᴋᴇ -\n\n`/set_verify3 sharedisklinks.com 587f94f0e0b1813a52aed61290af6ea79d6ee464`\n\n💔 ᴇʀʀᴏʀ - <code>{e}</code></b>")
 
 @Client.on_message(filters.command('set_stream'))
 async def set_stream(c, m):
@@ -867,7 +856,7 @@ async def set_stream(c, m):
     except Exception as e:
         await save_group_settings(grp_id, 'streamsite', STREAM_SITE)
         await save_group_settings(grp_id, 'streamapi', STREAM_API)
-        await sts.edit(f"<b><u>❌ ᴇʀʀᴏʀ ᴏᴄᴄᴏᴜʀᴇᴅ ❌</u>\n\nᴀᴜᴛᴏ ᴀᴅᴅᴇᴅ ᴅᴇꜰᴜʟᴛ sʜᴏʀᴛɴᴇʀ\n\nɪꜰ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴄʜᴀɴɢᴇ ᴛʜᴇɴ ᴜsᴇ ᴄᴏʀʀᴇᴄᴛ ꜰᴏʀᴍᴀᴛ ᴏʀ ᴀᴅᴅ ᴠᴀʟɪᴅ sʜᴏʀᴛʟɪɴᴋ ᴅᴏᴍᴀɪɴ ɴᴀᴍᴇ & ᴀᴘɪ\n\nʏᴏᴜ ᴄᴀɴ ᴀʟsᴏ ᴄᴏɴᴛᴀᴄᴛ ᴏᴜʀ <a href=https://t.me/safarisuport>sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ</a> ꜰᴏʀ sᴏʟᴠᴇ ᴛʜɪs ɪssᴜᴇ...\n\nʟɪᴋᴇ -\n\n`/set_stream sharedisklinks.com 587f94f0e0b1813a52aed61290af6ea79d6ee464`\n\n💔 ᴇʀʀᴏʀ - <code>{e}</code></b>")
+        await sts.edit(f"<b><u>❌ ᴇʀʀᴏʀ ᴏᴄᴄᴏᴜʀᴇᴅ ❌</u>\n\nᴀᴜᴛᴏ ᴀᴅᴅᴇᴅ ᴅᴇꜰᴜʟᴛ sʜᴏʀᴛɴᴇʀ\n\nɪꜰ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴄʜᴀɴɢᴇ ᴛʜᴇɴ ᴜsᴇ ᴄᴏʀʀᴇᴄᴛ ꜰᴏʀᴍᴀᴛ ᴏʀ ᴀᴅᴅ ᴠᴀʟɪᴅ sʜᴏʀᴛʟɪɴᴋ ᴅᴏᴍᴀɪɴ ɴᴀᴍᴇ & ᴀᴘɪ\n\nʏᴏᴜ ᴄᴀɴ ᴀʟsᴏ ᴄᴏɴᴛᴀᴄᴛ ᴏᴜʀ <a href=https://t.me/MSLANDERS_HELP>sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ</a> ꜰᴏʀ sᴏʟᴠᴇ ᴛʜɪs ɪssᴜᴇ...\n\nʟɪᴋᴇ -\n\n`/set_stream sharedisklinks.com 587f94f0e0b1813a52aed61290af6ea79d6ee464`\n\n💔 ᴇʀʀᴏʀ - <code>{e}</code></b>")
            
 @Client.on_message(filters.command('set_caption'))
 async def save_caption(client, message):
@@ -1222,91 +1211,6 @@ async def deletemultiplefiles(bot, message):
         parse_mode=enums.ParseMode.HTML
     )
 
-@Client.on_callback_query(filters.regex("topsearch"))
-async def topsearch_callback(client, callback_query):    
-    def is_alphanumeric(string):
-        return bool(re.match('^[a-zA-Z0-9 ]*$', string))    
-    limit = 20  
-    top_messages = await silentdb.get_top_messages(limit)
-    seen_messages = set()
-    truncated_messages = []
-    for msg in top_messages:
-        msg_lower = msg.lower()
-        if msg_lower not in seen_messages and is_alphanumeric(msg):
-            seen_messages.add(msg_lower)            
-            if len(msg) > 35:
-                truncated_messages.append(msg[:32] + "...")
-            else:
-                truncated_messages.append(msg)
-    keyboard = [truncated_messages[i:i+2] for i in range(0, len(truncated_messages), 2)]
-    reply_markup = ReplyKeyboardMarkup(
-        keyboard, 
-        one_time_keyboard=True, 
-        resize_keyboard=True, 
-        placeholder="Most searches of the day"
-    )
-    await callback_query.message.reply_text("<b>Tᴏᴘ Sᴇᴀʀᴄʜᴇs Oғ Tʜᴇ Dᴀʏ 👇</b>", reply_markup=reply_markup)
-    await callback_query.answer()
-
-@Client.on_message(filters.command('top_search'))
-async def top(_, message):
-    def is_alphanumeric(string):
-        return bool(re.match('^[a-zA-Z0-9 ]*$', string))
-    try:
-        limit = int(message.command[1])
-    except (IndexError, ValueError):
-        limit = 20
-    top_messages = await silentdb.get_top_messages(limit)
-    seen_messages = set()
-    truncated_messages = []
-    for msg in top_messages:
-        if msg.lower() not in seen_messages and is_alphanumeric(msg):
-            seen_messages.add(msg.lower())            
-            if len(msg) > 35:
-                truncated_messages.append(msg[:35 - 3])
-            else:
-                truncated_messages.append(msg)
-    keyboard = []
-    for i in range(0, len(truncated_messages), 2):
-        row = truncated_messages[i:i+2]
-        keyboard.append(row)
-    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, resize_keyboard=True, placeholder="Most searches of the day")
-    await message.reply_text(f"<b>Tᴏᴘ Sᴇᴀʀᴄʜᴇs Oғ Tʜᴇ Dᴀʏ 👇</b>", reply_markup=reply_markup)
-
-    
-@Client.on_message(filters.command('trendlist'))
-async def trendlist(client, message):
-    def is_alphanumeric(string):
-        return bool(re.match('^[a-zA-Z0-9 ]*$', string))
-    limit = 31
-    if len(message.command) > 1:
-        try:
-            limit = int(message.command[1])
-        except ValueError:
-            await message.reply_text("Invalid number format.\nPlease provide a valid number after the /trendlist command.")
-            return 
-    try:
-        top_messages = await silentdb.get_top_messages(limit)
-    except Exception as e:
-        await message.reply_text(f"Error retrieving messages: {str(e)}")
-        return  
-    if not top_messages:
-        await message.reply_text("No top messages found.")
-        return 
-    seen_messages = set()
-    truncated_messages = []
-    for msg in top_messages:
-        if msg.lower() not in seen_messages and is_alphanumeric(msg):
-            seen_messages.add(msg.lower())
-            truncated_messages.append(msg[:32] + '...' if len(msg) > 35 else msg)
-    if not truncated_messages:
-        await message.reply_text("No valid top messages found.")
-        return  
-    formatted_list = "\n".join([f"{i+1}. <b>{msg}</b>" for i, msg in enumerate(truncated_messages)])
-    additional_message = "⚡️ 𝑨𝒍𝒍 𝒕𝒉𝒆 𝒓𝒆𝒔𝒖𝒍𝒕𝒔 𝒂𝒃𝒐𝒗𝒆 𝒄𝒐𝒎𝒆 𝒇𝒓𝒐𝒎 𝒘𝒉𝒂𝒕 𝒖𝒔𝒆𝒓𝒔 𝒉𝒂𝒗𝒆 𝒔𝒆𝒂𝒓𝒄𝒉𝒆𝒅 𝒇𝒐𝒓. 𝑻𝒉𝒆𝒚'𝒓𝒆 𝒔𝒉𝒐𝒘𝒏 𝒕𝒐 𝒚𝒐𝒖 𝒆𝒙𝒂𝒄𝒕𝒍𝒚 𝒂𝒔 𝒕𝒉𝒆𝒚 𝒘𝒆𝒓𝒆 𝒔𝒆𝒂𝒓𝒄𝒉𝒆𝒅, 𝒘𝒊𝒕𝒉𝒐𝒖𝒕 𝒂𝒏𝒚 𝒄𝒉𝒂𝒏𝒈𝒆𝒔 𝒃𝒚 𝒕𝒉𝒆 𝒐𝒘𝒏𝒆𝒓."
-    formatted_list += f"\n\n{additional_message}"
-    reply_text = f"<b>Top {len(truncated_messages)} Tʀᴀɴᴅɪɴɢ ᴏғ ᴛʜᴇ ᴅᴀʏ 👇:</b>\n\n{formatted_list}"
-    await message.reply_text(reply_text)
 
 @Client.on_message(filters.private & filters.command("pm_search") & filters.user(ADMINS))
 async def set_pm_search(client, message):
