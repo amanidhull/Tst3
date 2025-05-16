@@ -1,5 +1,3 @@
-# This code has been modified by @Safaridev
-# Please do not remove this credit
 import asyncio
 import re
 import ast
@@ -30,6 +28,7 @@ TIMEZONE = "Asia/Kolkata"
 import logging
 from urllib.parse import quote_plus
 from SAFARI.utils.file_properties import get_name, get_hash, get_media_file_size
+from database.topdb import silentdb
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.ERROR)
@@ -1147,7 +1146,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         buttons = [[
                     InlineKeyboardButton('☆ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ☆', url=f'http://telegram.me/{temp.U_NAME}?startgroup=true')
                 ],[
-                    InlineKeyboardButton('✪ ᴜᴘᴅᴀᴛᴇꜱ ✪', callback_data='channels'), 
+                    InlineKeyboardButton('Tʀᴇɴᴅɪɴɢ 🏷', callback_data="topsearch"),
                     InlineKeyboardButton('⚔️ғᴇᴀᴛᴜʀᴇs ⚔️', callback_data='features')
                 ],[
                     InlineKeyboardButton('🍀 Hᴇʟᴘ', callback_data='help'),
