@@ -1254,21 +1254,6 @@ async def most(client, callback_query):
     await callback_query.message.reply_text("<b>Hᴇʀᴇ ɪꜱ ᴛʜᴇ ᴍᴏꜱᴛ ꜱᴇᴀʀᴄʜᴇꜱ ʟɪꜱᴛ 👇</b>", reply_markup=reply_markup)
     await callback_query.answer()
 
-
-@Client.on_callback_query(filters.regex(r"^trending$"))
-async def top(client, query):
-    movie_series_names = await movie_series_db.get_movie_series_names(1)
-    if not movie_series_names:
-        await query.message.reply("Tʜᴇʀᴇ ᴀʀᴇ ɴᴏ ᴍᴏᴠɪᴇ ᴏʀ sᴇʀɪᴇs ɴᴀᴍᴇs ᴀᴠᴀɪʟᴀʙʟᴇ ғᴏʀ ᴛʜᴇ ᴛᴏᴘ sᴇᴀʀᴄʜᴇs.")
-        return
-    buttons = [movie_series_names[i:i + 2] for i in range(0, len(movie_series_names), 2)]
-    spika = ReplyKeyboardMarkup(
-        buttons,
-        resize_keyboard=True
-    )
-    await query.message.reply("<b>Here Is The Top Trending List 👇</b>", reply_markup=spika)
-    
-
 @Client.on_message(filters.command("restart") & filters.user(ADMINS))
 async def stop_button(bot, message):
     msg = await bot.send_message(text="<b><i>ʙᴏᴛ ɪꜱ ʀᴇꜱᴛᴀʀᴛɪɴɢ</i></b>", chat_id=message.chat.id)       
