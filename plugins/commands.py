@@ -263,7 +263,7 @@ async def start(client, message):
                     buttons = [[
                         InlineKeyboardButton("🔐 ᴠᴇʀɪғʏ 🔐", url=verify)
                     ],[
-                        InlineKeyboardButton("📽 ʜᴏᴡ ᴛᴏ ᴠᴇʀɪғʏ 📽, url=tutorial)
+                        InlineKeyboardButton("📽 ʜᴏᴡ ᴛᴏ ᴠᴇʀɪғʏ 📽", url=tutorial)
                     ],[
                         InlineKeyboardButton("✨ 5ᴍɪɴ Pʀᴇᴍɪᴜᴍ Tʀᴀɪʟ ✨", callback_data=f'give_trial')
                     ]]
