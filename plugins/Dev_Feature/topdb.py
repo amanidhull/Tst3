@@ -35,5 +35,3 @@ class Database:
     
     async def delete_all_messages(self):
         await self.col.delete_many({})
-
-silentdb = Database(DATABASE_URI, "SilentXBotz")
