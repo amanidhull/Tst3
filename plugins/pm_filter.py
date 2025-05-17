@@ -690,7 +690,7 @@ async def pm_spoll_choker(bot, query):
                     InlineKeyboardButton('ɪɴᴠᴀʟɪᴅ ғᴏʀᴍᴀᴛ🙅', callback_data=f"series:{reqstr1}:{search}"),
                     InlineKeyboardButton('sᴇʟʟ ᴍɪsᴛᴇᴋ✍️', callback_data=f"spelling_error:{reqstr1}:{search}")
                 ],[
-                    InlineKeyboardButton('⁉️ Close ⁉️', callback_data=f"close_data")
+                    InlineKeyboardButton('⛔ Close ⛔', callback_data=f"close_data")
                 ]]
                 reply_markup = InlineKeyboardMarkup(safari)
                 total=await bot.get_chat_members_count(query.message.chat.id)
@@ -715,7 +715,7 @@ async def pm_spoll_choker(bot, query):
                     InlineKeyboardButton('ɪɴᴠᴀʟɪᴅ ғᴏʀᴍᴀᴛ🙅', callback_data=f"series:{reqstr1}:{search}"),
                     InlineKeyboardButton('sᴇʟʟ ᴍɪsᴛᴇᴋ✍️', callback_data=f"spelling_error:{reqstr1}:{search}")
                 ],[
-                    InlineKeyboardButton('⦉ ᴄʟᴏsᴇ ⦊️', callback_data=f"close_data")
+                    InlineKeyboardButton('⛔ Close ⛔', callback_data=f"close_data")
                 ]]
                 reply_markup = InlineKeyboardMarkup(safari)
                 await bot.send_message(chat_id=LOG_CHANNEL, text=(script.PMNORSLTS.format(temp.B_NAME, reqstr.mention, search)), reply_markup=InlineKeyboardMarkup(safari))
@@ -1126,8 +1126,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     InlineKeyboardButton('💌 ᴀʙᴏᴜᴛ ', callback_data='about'),
                     InlineKeyboardButton('🐬 ʀᴇғᴇʀs', callback_data="pm_reff")
                 ],[
-                    InlineKeyboardButton('🍀 Hᴇʟᴘ', callback_data='help'),
-                    InlineKeyboardButton('💴 ᴜᴘɢʀᴀᴅᴇ', callback_data="premium_info")
+                    InlineKeyboardButton('🌺 Hᴇʟᴘ', callback_data='help'),
+                    InlineKeyboardButton('🎟 ᴜᴘɢʀᴀᴅᴇ', callback_data="premium_info")
                  ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await client.edit_message_media(
