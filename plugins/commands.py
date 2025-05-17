@@ -18,7 +18,7 @@ from database.users_chats_db import db
 from database.safari_reffer import sdb
 from info import *
 from .pm_filter import auto_filter
-from utils import get_settings, get_size, is_subscribed, is_req_subscribed, save_group_settings, temp, get_shortlink, get_seconds
+from utils import get_settings, get_size, is_subscribed, is_req_subscribed, save_group_settings, get_status, temp, get_shortlink, get_seconds
 from database.connections_mdb import active_connection
 import re
 import json
@@ -62,22 +62,12 @@ async def start(client, message):
                         InlineKeyboardButton('🎟 ᴜᴘɢʀᴀᴅᴇ', callback_data="premium_info")
                     ]]
             reply_markup = InlineKeyboardMarkup(buttons)
-            current_time = datetime.now(pytz.timezone(TIMEZONE))
-            curr_time = current_time.hour        
-            if curr_time < 12:
-                gtxt = "ɢᴏᴏᴅ ᴍᴏʀɴɪɴɢ 🌞" 
-            elif curr_time < 17:
-                gtxt = "ɢᴏᴏᴅ ᴀғᴛᴇʀɴᴏᴏɴ 🌓" 
-            elif curr_time < 21:
-                gtxt = "ɢᴏᴏᴅ ᴇᴠᴇɴɪɴɢ 🌘"
-            else:
-                gtxt = "ɢᴏᴏᴅ ɴɪɢʜᴛ 🌑"
             m=await message.reply_sticker("CAACAgUAAxkBAAIeq2gnPKAcwHb2zdazs1Tzu1M77AQeAAK4FgACWr1JVxIS9qJda1pQHgQ") 
             await asyncio.sleep(1)
             await m.delete()
             await message.reply_photo(
                 photo=random.choice(PICS),
-                caption=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
+                caption=script.START_TXT.format(message.from_user.mention, get_status(), temp.U_NAME, temp.B_NAME),
                 reply_markup=reply_markup,
                 parse_mode=enums.ParseMode.HTML
             )
@@ -91,22 +81,12 @@ async def start(client, message):
                         InlineKeyboardButton('🎟 ᴜᴘɢʀᴀᴅᴇ', callback_data="premium_info")
                     ]]
             reply_markup = InlineKeyboardMarkup(buttons)
-            current_time = datetime.now(pytz.timezone(TIMEZONE))
-            curr_time = current_time.hour        
-            if curr_time < 12:
-                gtxt = "ɢᴏᴏᴅ ᴍᴏʀɴɪɴɢ 🌞" 
-            elif curr_time < 17:
-                gtxt = "ɢᴏᴏᴅ ᴀғᴛᴇʀɴᴏᴏɴ 🌓" 
-            elif curr_time < 21:
-                gtxt = "ɢᴏᴏᴅ ᴇᴠᴇɴɪɴɢ 🌘"
-            else:
-                gtxt = "ɢᴏᴏᴅ ɴɪɢʜᴛ 🌑"
             m=await message.reply_sticker("CAACAgUAAxkBAAIeq2gnPKAcwHb2zdazs1Tzu1M77AQeAAK4FgACWr1JVxIS9qJda1pQHgQ") 
             await asyncio.sleep(1)
             await m.delete()
             await message.reply_photo(
                 photo=random.choice(PICS),
-                caption=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
+                caption=script.START_TXT.format(message.from_user.mention, get_status(), temp.U_NAME, temp.B_NAME),
                 reply_markup=reply_markup,
                 parse_mode=enums.ParseMode.HTML
             )
@@ -198,7 +178,7 @@ async def start(client, message):
                 
                 await client.send_message(settings['log'], script.VERIFIED_LOG_TEXT.format(safari.from_user.mention, user_id, datetime.now(pytz.timezone('Asia/Kolkata')).strftime('%d %B %Y'), num))
                 btn = [[
-                    InlineKeyboardButton("ᴄʟɪᴄᴋ ᴀɴᴅ ɢᴇᴛ ꜰɪʟᴇ 🥳", url=verify),
+                    InlineKeyboardButton("📬 ᴄʟɪᴄᴋ ᴀɴᴅ ɢᴇᴛ ꜰɪʟᴇ 📬", url=verify),
                 ]]
                 reply_markup=InlineKeyboardMarkup(btn)
                 dlt=await safari.reply_photo(
@@ -432,7 +412,7 @@ async def start(client, message):
             reply_markup=reply_markup
         )
         if await db.get_setting("AUTO_FILE_DELETE", default=AUTO_FILE_DELETE):
-            del_msg=await message.reply("<b>⚠️ᴛʜɪs ғɪʟᴇ ᴡɪʟʟ ʙᴇ ᴅᴇʟᴇᴛᴇᴅ ᴀғᴛᴇʀ 10 ᴍɪɴᴜᴛᴇs\n\nᴘʟᴇᴀsᴇ ғᴏʀᴡᴀʀᴅ ᴛʜᴇ ғɪʟᴇ sᴏᴍᴇᴡʜᴇʀᴇ ʙᴇғᴏʀᴇ ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ..</b>") 
+            del_msg=await message.reply("<b><u>❗️❗️❗️IMPORTANT❗️️❗️❗️</u></b>\n\nThis Movie Files/Videos will be deleted in <b><u>10 mins</u> 🫥 <i></b>(Due to Copyright Issues)</i>.\n\n<b><i>Please forward this ALL Files/Videos to your Saved Messages and Start Download there</i></b>")
             safari = msg
             await asyncio.sleep(900)
             await safari.delete() 
