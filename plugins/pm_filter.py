@@ -17,7 +17,7 @@ from info import *
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, InputMediaPhoto, InputMediaVideo
 from pyrogram import Client, filters, enums
 from pyrogram.errors import FloodWait, UserIsBlocked, MessageNotModified, PeerIdInvalid
-from utils import get_size, is_subscribed, get_poster, temp, get_settings, save_group_settings, get_shortlink, stream_site, get_text, imdb
+from utils import get_size, is_subscribed, get_poster, get_status, temp, get_settings, save_group_settings, get_shortlink, stream_site, get_text, imdb
 from database.users_chats_db import db
 from database.safari_reffer import sdb
 from database.ia_filterdb import Media, get_file_details, get_search_results, get_bad_files
@@ -207,11 +207,9 @@ async def next_page(bot, query):
                 InlineKeyboardButton("📁 𝗦𝗲𝗻𝗱 𝗔𝗹𝗹 𝗙𝗶𝗹𝗲𝘀 📁", callback_data=f"sendfiles#{key}")
             ])
             btn.insert(0, [
-                InlineKeyboardButton("Sᴇᴀꜱᴏɴꜱ", callback_data=f"seas#{req}")
-            ])
-            btn.insert(0, [
+                InlineKeyboardButton("Qᴜᴀʟɪᴛʏ", callback_data=f"quality#{req}"),
                 InlineKeyboardButton("Lᴀɴɢᴜᴀɢᴇ", callback_data=f"select_lang#{req}"),
-                InlineKeyboardButton("Qᴜᴀʟɪᴛʏ", callback_data=f"quality#{req}")
+                InlineKeyboardButton("Sᴇᴀꜱᴏɴꜱ", callback_data=f"seas#{req}")
             ])
         else:
             btn = []
@@ -219,11 +217,9 @@ async def next_page(bot, query):
                 InlineKeyboardButton("📁 𝗦𝗲𝗻𝗱 𝗔𝗹𝗹 𝗙𝗶𝗹𝗲𝘀 📁", callback_data=f"sendfiles#{key}")
             ])
             btn.insert(0, [
-                InlineKeyboardButton("Sᴇᴀꜱᴏɴꜱ", callback_data=f"seas#{req}")
-            ])
-            btn.insert(0, [
+                InlineKeyboardButton("Qᴜᴀʟɪᴛʏ", callback_data=f"quality#{req}"),
                 InlineKeyboardButton("Lᴀɴɢᴜᴀɢᴇ", callback_data=f"select_lang#{req}"),
-                InlineKeyboardButton("Qᴜᴀʟɪᴛʏ", callback_data=f"quality#{req}")
+                InlineKeyboardButton("Sᴇᴀꜱᴏɴꜱ", callback_data=f"seas#{req}")
             ])
         try:
             if settings['max_btn']:
@@ -340,11 +336,9 @@ async def language_check(bot, query):
                     InlineKeyboardButton("📁 𝗦𝗲𝗻𝗱 𝗔𝗹𝗹 𝗙𝗶𝗹𝗲𝘀 📁", callback_data=f"sendfiles#{key}")
                 ])
                 btn.insert(0, [
-                    InlineKeyboardButton("Sᴇᴀꜱᴏɴꜱ", callback_data=f"seas#{userid}")
-                ])
-                btn.insert(0, [
+                    InlineKeyboardButton("Qᴜᴀʟɪᴛʏ", callback_data=f"quality#{userid}"),
                     InlineKeyboardButton("Lᴀɴɢᴜᴀɢᴇ", callback_data=f"select_lang#{userid}"),
-                    InlineKeyboardButton("Qᴜᴀʟɪᴛʏ", callback_data=f"quality#{userid}")
+                    InlineKeyboardButton("Sᴇᴀꜱᴏɴꜱ", callback_data=f"seas#{userid}")
                 ])
             else:
                 btn = []
@@ -352,11 +346,9 @@ async def language_check(bot, query):
                     InlineKeyboardButton("📁 𝗦𝗲𝗻𝗱 𝗔𝗹𝗹 𝗙𝗶𝗹𝗲𝘀 📁", callback_data=f"sendfiles#{key}")
                 ])
                 btn.insert(0, [
-                    InlineKeyboardButton("Sᴇᴀꜱᴏɴꜱ", callback_data=f"seas#{userid}")
-                ])
-                btn.insert(0, [
+                    InlineKeyboardButton("Qᴜᴀʟɪᴛʏ", callback_data=f"quality#{userid}"),
                     InlineKeyboardButton("Lᴀɴɢᴜᴀɢᴇ", callback_data=f"select_lang#{userid}"),
-                    InlineKeyboardButton("Qᴜᴀʟɪᴛʏ", callback_data=f"quality#{userid}")
+                    InlineKeyboardButton("Sᴇᴀꜱᴏɴꜱ", callback_data=f"seas#{userid}")
                 ])
     
             if offset != "":
@@ -464,11 +456,9 @@ async def quality_check(bot, query):
                     InlineKeyboardButton("📁 𝗦𝗲𝗻𝗱 𝗔𝗹𝗹 𝗙𝗶𝗹𝗲𝘀 📁", callback_data=f"sendfiles#{key}")
                 ])
                 btn.insert(0, [
-                    InlineKeyboardButton("Sᴇᴀꜱᴏɴꜱ", callback_data=f"seas#{userid}")
-                ])
-                btn.insert(0, [
+                    InlineKeyboardButton("Qᴜᴀʟɪᴛʏ", callback_data=f"quality#{userid}"),
                     InlineKeyboardButton("Lᴀɴɢᴜᴀɢᴇ", callback_data=f"select_lang#{userid}"),
-                    InlineKeyboardButton("Qᴜᴀʟɪᴛʏ", callback_data=f"quality#{userid}")
+                    InlineKeyboardButton("Sᴇᴀꜱᴏɴꜱ", callback_data=f"seas#{userid}")
                 ])
             else:
                 btn = []
@@ -476,11 +466,9 @@ async def quality_check(bot, query):
                     InlineKeyboardButton("📁 𝗦𝗲𝗻𝗱 𝗔𝗹𝗹 𝗙𝗶𝗹𝗲𝘀 📁", callback_data=f"sendfiles#{key}")
                 ])
                 btn.insert(0, [
-                    InlineKeyboardButton("Sᴇᴀꜱᴏɴꜱ", callback_data=f"seas#{userid}")
-                ])
-                btn.insert(0, [
+                    InlineKeyboardButton("Qᴜᴀʟɪᴛʏ", callback_data=f"quality#{userid}"),
                     InlineKeyboardButton("Lᴀɴɢᴜᴀɢᴇ", callback_data=f"select_lang#{userid}"),
-                    InlineKeyboardButton("Qᴜᴀʟɪᴛʏ", callback_data=f"quality#{userid}")
+                    InlineKeyboardButton("Sᴇᴀꜱᴏɴꜱ", callback_data=f"seas#{userid}")
                 ])
             if offset != "":
                 BUTTONS[key] = movie
@@ -584,11 +572,9 @@ async def seasons_check(bot, query):
                     InlineKeyboardButton("📁 𝗦𝗲𝗻𝗱 𝗔𝗹𝗹 𝗙𝗶𝗹𝗲𝘀 📁", callback_data=f"sendfiles#{key}")
                 ])
                 btn.insert(0, [
-                    InlineKeyboardButton("Sᴇᴀꜱᴏɴꜱ", callback_data=f"seas#{userid}")
-                ])
-                btn.insert(0, [
+                    InlineKeyboardButton("Qᴜᴀʟɪᴛʏ", callback_data=f"quality#{userid}"),
                     InlineKeyboardButton("Lᴀɴɢᴜᴀɢᴇ", callback_data=f"select_lang#{userid}"),
-                    InlineKeyboardButton("Qᴜᴀʟɪᴛʏ", callback_data=f"quality#{userid}")
+                    InlineKeyboardButton("Sᴇᴀꜱᴏɴꜱ", callback_data=f"seas#{userid}")
                 ])
             else:
                 btn = []
@@ -596,11 +582,9 @@ async def seasons_check(bot, query):
                     InlineKeyboardButton("📁 𝗦𝗲𝗻𝗱 𝗔𝗹𝗹 𝗙𝗶𝗹𝗲𝘀 📁", callback_data=f"sendfiles#{key}")
                 ])
                 btn.insert(0, [
-                    InlineKeyboardButton("Sᴇᴀꜱᴏɴꜱ", callback_data=f"seas#{userid}")
-                ])
-                btn.insert(0, [
+                    InlineKeyboardButton("Qᴜᴀʟɪᴛʏ", callback_data=f"quality#{userid}"),
                     InlineKeyboardButton("Lᴀɴɢᴜᴀɢᴇ", callback_data=f"select_lang#{userid}"),
-                    InlineKeyboardButton("Qᴜᴀʟɪᴛʏ", callback_data=f"quality#{userid}")
+                    InlineKeyboardButton("Sᴇᴀꜱᴏɴꜱ", callback_data=f"seas#{userid}")
                 ])
             if offset != "":
                 BUTTONS[key] = movie
@@ -1146,23 +1130,13 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     InlineKeyboardButton('💴 ᴜᴘɢʀᴀᴅᴇ', callback_data="premium_info")
                  ]]
         reply_markup = InlineKeyboardMarkup(buttons)
-        current_time = datetime.now(pytz.timezone(TIMEZONE))
-        curr_time = current_time.hour        
-        if curr_time < 12:
-            gtxt = "ɢᴏᴏᴅ ᴍᴏʀɴɪɴɢ 🌞" 
-        elif curr_time < 17:
-            gtxt = "ɢᴏᴏᴅ ᴀғᴛᴇʀɴᴏᴏɴ 🌓" 
-        elif curr_time < 21:
-            gtxt = "ɢᴏᴏᴅ ᴇᴠᴇɴɪɴɢ 🌘"
-        else:
-            gtxt = "ɢᴏᴏᴅ ɴɪɢʜᴛ 🌑"
         await client.edit_message_media(
             query.message.chat.id,
             query.message.id,
             InputMediaPhoto(random.choice(PICS))
         )
         await query.message.edit_text(
-            text=script.START_TXT.format(query.from_user.mention, temp.U_NAME, temp.B_NAME),
+            text=script.START_TXT.format(query.from_user.mention, get_status(), temp.U_NAME, temp.B_NAME),
             reply_markup=reply_markup,
             parse_mode=enums.ParseMode.HTML
         )
@@ -1338,7 +1312,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await client.edit_message_media(
             query.message.chat.id, 
             query.message.id, 
-            InputMediaPhoto(random.choice(PICS), has_spoiler=True)
+            InputMediaPhoto(random.choice(PICS))
         )
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_text(
@@ -1355,7 +1329,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await client.edit_message_media(
             query.message.chat.id, 
             query.message.id, 
-            InputMediaPhoto(random.choice(PICS), has_spoiler=True)
+            InputMediaPhoto(random.choice(PICS))
         )
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_text(
@@ -1377,7 +1351,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await client.edit_message_media(
             query.message.chat.id, 
             query.message.id, 
-            InputMediaPhoto(random.choice(PICS), has_spoiler=True)
+            InputMediaPhoto(random.choice(PICS))
         )
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_text(
@@ -1396,7 +1370,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await client.edit_message_media(
             query.message.chat.id, 
             query.message.id, 
-            InputMediaPhoto(random.choice(PICS), has_spoiler=True)
+            InputMediaPhoto(random.choice(PICS))
         )
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_text(
@@ -1466,7 +1440,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await client.edit_message_media(
             query.message.chat.id, 
             query.message.id, 
-            InputMediaPhoto(random.choice(PICS), has_spoiler=True)
+            InputMediaPhoto(random.choice(PICS))
         )
         reply_markup = InlineKeyboardMarkup(buttons)
         total = await Media.count_documents()
@@ -1655,11 +1629,9 @@ async def auto_filter(client, msg, spoll=False):
                 InlineKeyboardButton("📁 𝗦𝗲𝗻𝗱 𝗔𝗹𝗹 𝗙𝗶𝗹𝗲𝘀 📁", callback_data=f"sendfiles#{key}"), 
             ])
             btn.insert(0, [
-                InlineKeyboardButton("Sᴇᴀꜱᴏɴꜱ", callback_data=f"seas#{message.from_user.id}")
-            ])
-            btn.insert(0, [
-                InlineKeyboardButton("Lᴀɴɢᴜᴀɢᴇ", callback_data=f"select_lang#{message.from_user.id}"),
                 InlineKeyboardButton("Qᴜᴀʟɪᴛʏ", callback_data=f"quality#{message.from_user.id}"),
+                InlineKeyboardButton("Lᴀɴɢᴜᴀɢᴇ", callback_data=f"select_lang#{message.from_user.id}"),
+                InlineKeyboardButton("Sᴇᴀꜱᴏɴꜱ", callback_data=f"seas#{message.from_user.id}")
             ])
         else:
             btn = []
@@ -1667,11 +1639,9 @@ async def auto_filter(client, msg, spoll=False):
                 InlineKeyboardButton("📁 𝗦𝗲𝗻𝗱 𝗔𝗹𝗹 𝗙𝗶𝗹𝗲𝘀 📁", callback_data=f"sendfiles#{key}"), 
             ])
             btn.insert(0, [
-                InlineKeyboardButton("Sᴇᴀꜱᴏɴꜱ", callback_data=f"seas#{message.from_user.id}")
-            ])
-            btn.insert(0, [
-                InlineKeyboardButton("Lᴀɴɢᴜᴀɢᴇ", callback_data=f"select_lang#{message.from_user.id}"),
                 InlineKeyboardButton("Qᴜᴀʟɪᴛʏ", callback_data=f"quality#{message.from_user.id}"),
+                InlineKeyboardButton("Lᴀɴɢᴜᴀɢᴇ", callback_data=f"select_lang#{message.from_user.id}"),
+                InlineKeyboardButton("Sᴇᴀꜱᴏɴꜱ", callback_data=f"seas#{message.from_user.id}")
             ])
     
         if offset != "":
