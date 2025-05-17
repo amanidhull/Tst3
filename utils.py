@@ -1,5 +1,3 @@
-# This code has been modified by @Safaridev
-# Please do not remove this credit
 import logging
 from pyrogram.errors import InputUserDeactivated, UserNotParticipant, FloodWait, UserIsBlocked, PeerIdInvalid, ChatAdminRequired, MessageIdInvalid, EmoticonInvalid, ReactionInvalid
 from info import *
@@ -265,6 +263,20 @@ def list_to_str(k):
         return str(k[0])
     else:
         return ' '.join(f'{elem}, ' for elem in k)
+
+def get_status():
+    tz = pytz.timezone('Asia/Kolkata')
+    current_time = datetime.now(tz)
+    curr_hour = current_time.hour
+    
+    if curr_hour < 12:
+        return "ɢᴏᴏᴅ ᴍᴏʀɴɪɴɢ 🌞"
+    elif curr_hour < 17:
+        return "ɢᴏᴏᴅ ᴀғᴛᴇʀɴᴏᴏɴ 🌓"
+    elif curr_hour < 21:
+        return "ɢᴏᴏᴅ ᴇᴠᴇɴɪɴɢ 🌘"
+    else:
+        return "ɢᴏᴏᴅ ɴɪɢʜᴛ 🌑"
         
 def get_file_id(msg: Message):
     if msg.media:
